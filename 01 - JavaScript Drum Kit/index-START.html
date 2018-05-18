@@ -59,6 +59,26 @@
 
 <script>
 
+function playSound(e) {
+  x = e.which;
+  const audio = document.querySelector(`audio[data-key="${x}"]`);
+  const key = document.querySelector(`.key[data-key="${x}"]`);
+  if (audio == null) return; //same as if (!audio)
+  audio.currentTime = 0;
+  audio.play();
+  key.classList.add('playing');
+}
+
+function removeTransition(e) {
+  if (e.propertyName !== "border-right-color") {
+    this.classList.remove('playing'); //this refers to key of .addEventListeners
+  }
+}
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener("transitionend", removeTransition));
+window.addEventListener('keydown', playSound);
+
 </script>
 
 
